@@ -28,9 +28,40 @@ public class FishManager : MonoBehaviour
     }
     private void Awake()
     {
-        
+        col = GetComponent<CircleCollider2D>();
+        render = GetComponent<SpriteRenderer>();
+        ScreenLeft = Camera.main.ScreenToWorldPoint(Vector3.zero).x;
     }
+    public void ResetFish()
+    {
+        if(tweener != null)
+        {
+            tweener.Kill(false);
+        }
+        float num = UnityEngine.Random.Range(type.minLength, type.maxLength);
+        col.enabled = true;
+        Vector3 position = transform.position;
+        position.y = num;
+        position.x = ScreenLeft;
+        transform.position = position;
+        float num2 = 1;
+        float y = UnityEngine.Random.Range(num - num2, num + num2);
+        Vector2 v = new Vector2(-position.x, y);
 
+        float num3 = 3;
+        float  delay  = UnityEngine.Random.Range(0,2*num3);
+        tweener = transform.DOMove(v, num3, false).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetDelay(delay).onStepComplete(delegate
+        {
+            Vector3 localscale = transform.localScale;
+            localscale.x = -localscale.x;
+            transform.localScale = localscale;
+        });
+    }
+    public void Hook()
+    {
+        col.enabled = false;
+        tweener.Kill(false);
+    }
     [Serializable]
 public class FishType
 {
