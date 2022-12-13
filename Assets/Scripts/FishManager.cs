@@ -50,7 +50,7 @@ public class FishManager : MonoBehaviour
 
         float num3 = 3;
         float  delay  = UnityEngine.Random.Range(0,2*num3);
-        tweener = transform.DOMove(v, num3, false).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetDelay(delay).onStepComplete(delegate
+        tweener = transform.DOMove(v, num3, false).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetDelay(delay).OnStepComplete(delegate
         {
             Vector3 localscale = transform.localScale;
             localscale.x = -localscale.x;
